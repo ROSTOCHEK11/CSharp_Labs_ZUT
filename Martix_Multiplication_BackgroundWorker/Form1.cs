@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +23,7 @@ namespace lab7_backgroundWorker
             matrixWorker.DoWork += MatrixWorker_DoWork;
             matrixWorker.ProgressChanged += MatrixWorker_ProgressChanged;
             matrixWorker.RunWorkerCompleted += MatrixWorker_RunWorkerCompleted;
+            
         }
 
         private void multiplyButton_Click(object sender, EventArgs e)
@@ -31,6 +32,12 @@ namespace lab7_backgroundWorker
             int colsA = int.Parse(textBoxCols1.Text);
             int rowsB = int.Parse(textBoxRows2.Text);
             int colsB = int.Parse(textBoxCols2.Text);
+
+            if(colsA != rowsB)
+            {
+                MessageBox.Show("Different dimensions");
+                return;
+            }
 
             // For simplicity, creating random matrices A and B with specified sizes
             int[,] matrixA = GenerateRandomMatrix(rowsA, colsA);
@@ -72,16 +79,18 @@ namespace lab7_backgroundWorker
             {
                 for (int j = 0; j < colsB; j++)
                 {
-                    long sum = 0; // Use long for large matrices
+                    long sum = 0; 
                     for (int k = 0; k < matrixA.GetLength(1); k++)
                     {
                         sum += (long)matrixA[i, k] * matrixB[k, j]; // Use long for intermediate values
                     }
                     resultMatrix[i, j] = (int)sum;
 
-                    // Report progress for each row multiplication
-                    matrixWorker.ReportProgress(i + 1);
+                    
+                    
                 }
+                // Report progress for each row multiplication
+                matrixWorker.ReportProgress(i + 1);
             }
         }
 
@@ -96,6 +105,6 @@ namespace lab7_backgroundWorker
             MessageBox.Show("Matrix multiplication completed!");
         }
 
-
+        
     }
 }
