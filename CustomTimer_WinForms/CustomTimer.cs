@@ -66,7 +66,7 @@ namespace CustomTimer_WinForms
                 {
                     errorHandler(ex); // Invoke the errorHandler delegate
                 }
-                // Alternatively, you can use: errorHandler?.Invoke(ex);
+                
             }
         }
     }
